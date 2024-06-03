@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>FIFA 2022 Matches</h1>
+<table id="display">
+    <!-- Table body will be populated dynamically -->
+</table>
+
+<script>
+    // Function to make AJAX request and populate table
+    function fetchData() {
+        // Make AJAX request to fetch data from /books/all endpoint
+        fetch('/matches/display')
+            .then(response => response.json())
+            .then(matches => {
+                // Clear existing rows
+                var table = document.getElementById('display');
+                table.innerHTML = '';
+                //get the list of matches
+                for (let i = 0; i < matches.length; i++) {
+                    var d = matches[i];
+                    var tr = document.createElement('tr');
+                    // Usage:
+                    appendTableCell(tr, d.team);
+                    appendTableCell(tr, d.goals);
+                    appendTableCell(tr, d.opponent);
+                    appendTableCell(tr, d.goalsop);
+                    appendTableCell(tr, d.category);
+                    // Add more td elements for other properties as needed
+                    table.appendChild(tr);
+                }
+                //add local stoRAGE
+                localStorage.setItem("stored", JSON.stringify(matches));
+
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }
+    // Function to create and append a table cell to a table row
+    function appendTableCell(tr, content) {
+        const td = document.createElement('td');
+        td.textContent = content;
+        tr.appendChild(td);
+    }
+
+
+    // Call the function initially to fetch data and populate the table
+    fetchData();
+</script>
+    </body>
+</html>
