@@ -14,7 +14,7 @@
     // Function to make AJAX request and populate table
     function fetchData() {
         // Make AJAX request to fetch data from /books/all endpoint
-        fetch(' ../../../../matches.json')
+        fetch(' static.json')
             .then(response => response.json())
             .then(matches => {
                 // Clear existing rows
